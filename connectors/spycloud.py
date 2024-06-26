@@ -1,10 +1,10 @@
-from broker import make_request
+from dotenv import dotenv_values, find_dotenv
 from niquests import Response
 from typing import Dict, Any
-from dotenv import dotenv_values
+from broker import make_request
 
 
-env_config: Dict = dotenv_values('../.env')
+env_config: Dict = dotenv_values(find_dotenv())
 
 if not env_config:
     raise FileNotFoundError('The .env file doesn\'t exist or is empty. Did you copy the'

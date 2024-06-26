@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "connectors"
+version = "0.1.0"
+description = "A simple, lightweight set of connectors and functions to various APIs, controlled by a central broker."
+authors = [
+    "Rob D'Aveta <rob.daveta@gmail.com>",
+    "Aaron Buchanan <aaronbuchanan@gmail.com>",
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+niquests = "^3.7.0"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+niquests = "^3.7.0"
+python-dotenv = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

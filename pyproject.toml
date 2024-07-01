@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "connectors"
+name = "ppp-connectors"
 version = "0.1.0"
 description = "A simple, lightweight set of connectors and functions to various APIs, controlled by a central broker."
 authors = [

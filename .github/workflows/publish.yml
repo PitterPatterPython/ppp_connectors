@@ -2,8 +2,8 @@ name: Publish to PyPI
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'  # This will trigger the workflow for any tag starting with 'v'
 
 jobs:
   build-and-publish:
@@ -24,6 +24,15 @@ jobs:
     - name: Install dependencies
       run: poetry install
 
+    - name: Check version
+      run: |
+        pkg_version=$(poetry version -s)
+        tag_version=${GITHUB_REF#refs/tags/v}
+        if [ "$pkg_version" != "$tag_version" ]; then
+          echo "Version mismatch: pyproject.toml ($pkg_version) != Git tag ($tag_version)"
+          exit 1
+        fi
+
     - name: Build package
       run: poetry build
 
@@ -33,3 +42,7 @@ jobs:
       run: |
         poetry config pypi-token.pypi $PYPI_TOKEN
         poetry publish
+
+
+
+

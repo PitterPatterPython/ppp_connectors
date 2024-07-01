@@ -11,7 +11,7 @@ if not env_config:
                             '.env.sample file to .env and set your values?')
 
 
-def sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Dict:
+def sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Response:
     method: str = 'get'
     url: str = f'https://api.spycloud.io/sip-v1/breach/data/cookie-domains/{cookie_domains}'
     headers: Dict = {
@@ -22,9 +22,4 @@ def sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Dict:
 
     result: Response = make_request(method=method, url=url, headers=headers, params=params)
 
-    print(result.status_code)
-    print(result.content)
-
-
-if __name__ == '__main__':
-    sip_cookie_domains('wellsfargo.com', since="2024-04-24")
+    return result

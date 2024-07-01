@@ -16,8 +16,7 @@ def make_request(
     headers: Dict[str, str] = None,
     params: Dict[str, Any] = None,
     data: Dict[str, Any] = None,
-    json: Dict[str, Any] = None,
-    multiplexed: bool = False
+    json: Dict[str, Any] = None
 ) -> niquests.Response:
     """_summary_
 

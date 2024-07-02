@@ -1,13 +1,15 @@
+import sys
+from typing import Callable, Dict, Any
 from dotenv import dotenv_values, find_dotenv
 import niquests
-from typing import Callable, Dict, Any
 
 
 env_config: Dict = dotenv_values(find_dotenv())
 
 if not env_config:
-    raise FileNotFoundError('The .env file doesn\'t exist or is empty. Did you copy the'
-                            '.env.sample file to .env and set your values?')
+    print('[!] The .env file doesn\'t exist or is empty. Did you copy the'
+          '.env.sample file to .env and set your values?', file=sys.stderr)
+    sys.exit(1)
 
 
 def make_request(

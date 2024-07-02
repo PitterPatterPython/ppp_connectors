@@ -1,17 +1,18 @@
+import sys
+from typing import Dict, Any
 from dotenv import dotenv_values, find_dotenv
 from niquests import Response
-from typing import Dict, Any
-from broker import make_request
+from .broker import make_request
 
 
 env_config: Dict = dotenv_values(find_dotenv())
 
 if not env_config:
-    raise FileNotFoundError('The .env file doesn\'t exist or is empty. Did you copy the'
-                            '.env.sample file to .env and set your values?')
+    print('[!] The .env file doesn\'t exist or is empty. Did you copy the'
+          '.env.sample file to .env and set your values?', file=sys.stderr)
+    sys.exit(1)
 
-
-def sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Response:
+def spycloud_sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Response:
     method: str = 'get'
     url: str = f'https://api.spycloud.io/sip-v1/breach/data/cookie-domains/{cookie_domains}'
     headers: Dict = {

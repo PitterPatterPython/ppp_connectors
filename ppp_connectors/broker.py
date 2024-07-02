@@ -1,7 +1,8 @@
 import sys
-from typing import Callable, Dict, Any
+from typing import Callable, Dict, Any, List
 from dotenv import dotenv_values, find_dotenv
 import niquests
+from .helpers import check_required_env_vars
 
 
 env_config: Dict = dotenv_values(find_dotenv())
@@ -20,22 +21,32 @@ def make_request(
     data: Dict[str, Any] = None,
     json: Dict[str, Any] = None
 ) -> niquests.Response:
-    """_summary_
+    """Perform an HTTP request on behalf of a calling function
 
     Args:
-        method (str): _description_
-        url (str): _description_
-        headers (Dict[str, str], optional): _description_. Defaults to None.
-        params (Dict[str, Any], optional): _description_. Defaults to None.
-        data (Dict[str, Any], optional): _description_. Defaults to None.
-        json (Dict[str, Any], optional): _description_. Defaults to None.
+        method (str): the HTTP method to use
+        url (str): the API URL to call
+        headers (Dict[str, str], optional): the HTTP headers to use in the request. Defaults to None.
+        params (Dict[str, Any], optional): the query parameters to use in the request. Defaults to None.
+        data (Dict[str, Any], optional): the data to use in the request. Defaults to None.
+        json (Dict[str, Any], optional): the json data to use in the request. Defaults to None.
 
     Raises:
-        FileNotFoundError: _description_
+        ValueError: this will raise if an invalid HTTP method is passed
 
     Returns:
-        requests.Response: _description_
+        niquests.Response: the HTTP response from the request
     """
+
+    # Define required environment variables
+    required_vars: List[str] = [
+        'HTTP_PROXY',
+        'HTTPS_PROXY',
+        'VERIFY_SSL'
+    ]
+
+    # Check and ensure that required variables are present, exits if not
+    check_required_env_vars(env_config, required_vars)
 
     proxies: Dict = {
         'http_proxy': env_config['HTTP_PROXY'],

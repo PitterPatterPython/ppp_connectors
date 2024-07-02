@@ -1,1 +1,5 @@
-__all__ = ['make_request', 'spycloud_sip_cookie_domains']
+__all__ = [
+    'check_required_env_vars',
+    'make_request',
+    'spycloud_sip_cookie_domains'
+]

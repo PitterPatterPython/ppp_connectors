@@ -7,7 +7,7 @@ import niquests
 env_config: Dict = dotenv_values(find_dotenv())
 
 if not env_config:
-    print('[!] The .env file doesn\'t exist or is empty. Did you copy the'
+    print('[!] Error: The .env file doesn\'t exist or is empty. Did you copy the'
           '.env.sample file to .env and set your values?', file=sys.stderr)
     sys.exit(1)
 

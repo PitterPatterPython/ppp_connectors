@@ -1,7 +1,7 @@
 import sys
 from typing import Callable, Dict, Any, List
 from dotenv import dotenv_values, find_dotenv
-import niquests
+import requests
 from .helpers import check_required_env_vars
 
 
@@ -20,7 +20,7 @@ def make_request(
     params: Dict[str, Any] = None,
     data: Dict[str, Any] = None,
     json: Dict[str, Any] = None
-) -> niquests.Response:
+) -> requests.Response:
     """Perform an HTTP request on behalf of a calling function
 
     Args:
@@ -35,7 +35,7 @@ def make_request(
         ValueError: this will raise if an invalid HTTP method is passed
 
     Returns:
-        niquests.Response: the HTTP response from the request
+        requests.Response: the HTTP response from the request
     """
 
     # Define required environment variables
@@ -59,11 +59,11 @@ def make_request(
         urllib3.disable_warnings()
 
     method_map: Dict[str, Callable] = {
-        'GET': niquests.get,
-        'POST': niquests.post,
-        'PUT': niquests.put,
-        'DELETE': niquests.delete,
-        'PATCH': niquests.patch
+        'GET': requests.get,
+        'POST': requests.post,
+        'PUT': requests.put,
+        'DELETE': requests.delete,
+        'PATCH': requests.patch
     }
 
     request_func = method_map.get(method.upper())

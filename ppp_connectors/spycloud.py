@@ -1,17 +1,12 @@
 import sys
 from typing import Dict, Any, List
-from dotenv import dotenv_values, find_dotenv
 from requests import Response
 from .broker import make_request
-from .helpers import check_required_env_vars
+from .helpers import check_required_env_vars, combine_env_configs
 
-# Load environment variables
-env_config: Dict = dotenv_values(find_dotenv())
 
-if not env_config:
-    print('[!] Error: The .env file doesn\'t exist or is empty. Did you copy the'
-          '.env.sample file to .env and set your values?', file=sys.stderr)
-    sys.exit(1)
+env_config: Dict[str, Any] = combine_env_configs()
+
 
 def spycloud_sip_cookie_domains(cookie_domains: str, **kwargs: Dict[str, Any]) -> Response:
     """Return botnet sourced cookie data for your domain and its subdomains

@@ -1,16 +1,10 @@
 import sys
 from typing import Callable, Dict, Any, List
-from dotenv import dotenv_values, find_dotenv
 import requests
-from .helpers import check_required_env_vars
+from .helpers import check_required_env_vars, combine_env_configs
 
 
-env_config: Dict = dotenv_values(find_dotenv())
-
-if not env_config:
-    print('[!] Error: The .env file doesn\'t exist or is empty. Did you copy the'
-          '.env.sample file to .env and set your values?', file=sys.stderr)
-    sys.exit(1)
+env_config: Dict[str, Any] = combine_env_configs()
 
 
 def make_request(
@@ -39,18 +33,14 @@ def make_request(
     """
 
     # Define required environment variables
-    required_vars: List[str] = [
-        'HTTP_PROXY',
-        'HTTPS_PROXY',
-        'VERIFY_SSL'
-    ]
+    required_vars: List[str] = []
 
     # Check and ensure that required variables are present, exits if not
     check_required_env_vars(env_config, required_vars)
 
     proxies: Dict = {
-        'http': env_config['HTTP_PROXY'],
-        'https': env_config['HTTPS_PROXY']
+        'http': env_config['HTTP_PROXY'] if env_config["HTTP_PROXY"] else "",
+        'https': env_config['HTTPS_PROXY'] if env_config["HTTPS_PROXY"] else ""
     }
 
     verify: str = False if env_config['VERIFY_SSL'].lower() == "false" else True

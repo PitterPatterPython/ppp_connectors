@@ -38,12 +38,12 @@ def make_request(
     # Check and ensure that required variables are present, exits if not
     check_required_env_vars(env_config, required_vars)
 
-    proxies: Dict = {
-        'http': env_config['HTTP_PROXY'] if env_config["HTTP_PROXY"] else "",
-        'https': env_config['HTTPS_PROXY'] if env_config["HTTPS_PROXY"] else ""
+    proxies: Dict[str, Any] = {
+        'http': env_config['HTTP_PROXY'] if 'HTTP_PROXY' in env_config else '',
+        'https': env_config['HTTPS_PROXY'] if 'HTTPS_PROXY' in env_config else ''
     }
 
-    verify: str = False if env_config['VERIFY_SSL'].lower() == "false" else True
+    verify: bool = False if 'VERIFY_SSL' in env_config and env_config['VERIFY_SSL'].lower() == 'false' else True
     if verify is False:
         import urllib3
         urllib3.disable_warnings()

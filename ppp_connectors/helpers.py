@@ -19,9 +19,9 @@ def check_required_env_vars(config: Dict[str, str], required_vars: List[str]) ->
     missing_vars = dotenv_missing_vars | osenv_missing_vars
 
     if dotenv_missing_vars and osenv_missing_vars:
-        print(f"[!] Error: missing required environment variables: {', '.join(missing_vars)}. "
-              "Please ensure these are present either in your .env file, or in the "
-              "system's environment variables.", file=sys.stderr)
+        print(f'[!] Error: missing required environment variables: {', '.join(missing_vars)}. '
+              'Please ensure these are present either in your .env file, or in the '
+              'system\'s environment variables.', file=sys.stderr)
         sys.exit(1)
 
 def combine_env_configs() -> Dict[str, Any]:

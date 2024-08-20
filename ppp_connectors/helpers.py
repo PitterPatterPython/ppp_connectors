@@ -25,14 +25,12 @@ def check_required_env_vars(config: Dict[str, str], required_vars: List[str]) ->
         sys.exit(1)
 
 def combine_env_configs() -> Dict[str, Any]:
-    """_summary_
-
-    Args:
-        dotenv_config (Dict[str, str]): _description_
-        osenv_config (Dict[str, str]): _description_
+    """Find a .env file if it exists, and combine it with system environment
+        variables to form a "combined_config" dictionary of environment variables
 
     Returns:
-        Dict: _description_
+        Dict: a dictionary containing the output of a .env file (if found), and
+        system environment variables
     """
 
     env_config: Dict[str, Any] = dict(dotenv_values(find_dotenv()))

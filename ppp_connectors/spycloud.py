@@ -1,4 +1,3 @@
-import sys
 from typing import Dict, Any, List
 from requests import Response
 from .broker import make_request

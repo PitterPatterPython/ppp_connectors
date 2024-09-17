@@ -163,3 +163,28 @@ def spycloud_ato_phone_number(phone_number:str, **kwargs: Dict[str, Any]) -> Res
     result: Response = make_request(method=method, url=url, headers=headers, params=params)
 
     return result
+
+def spycloud_ato_breach_catalog(query:str, **kwargs: Dict[str, Any]) -> Response:
+
+    # Define required environment variables
+    required_vars: List[str] = [
+        'SPYCLOUD_API_ATO_KEY'
+    ]
+
+    # Check and ensure that required variables are present, exits if not
+    check_required_env_vars(env_config, required_vars)
+
+    method: str = 'get'
+    url: str = f'https://api.spycloud.io/sp-v2/breach/catalog'
+    headers: Dict = {
+        'accept': 'application/json',
+        'x-api-key': env_config['SPYCLOUD_API_ATO_KEY']
+    }
+    params: Dict = {
+        'query': query,
+        **kwargs
+    }
+
+    result: Response = make_request(method=method, url=url, headers=headers, params=params)
+
+    return result

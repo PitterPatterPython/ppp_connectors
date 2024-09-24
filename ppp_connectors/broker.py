@@ -39,8 +39,8 @@ def make_request(
     check_required_env_vars(env_config, required_vars)
 
     proxies: Dict[str, Any] = {
-        'http': env_config['HTTP_PROXY'] if 'HTTP_PROXY' in env_config else '',
-        'https': env_config['HTTPS_PROXY'] if 'HTTPS_PROXY' in env_config else ''
+        'http': env_config['PPP_HTTP_PROXY'] if 'PPP_HTTP_PROXY' in env_config else '',
+        'https': env_config['PPP_HTTPS_PROXY'] if 'PPP_HTTPS_PROXY' in env_config else ''
     }
 
     verify: bool = False if 'VERIFY_SSL' in env_config and env_config['VERIFY_SSL'].lower() == 'false' else True

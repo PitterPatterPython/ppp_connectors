@@ -8,10 +8,10 @@ env_config: Dict[str, Any] = combine_env_configs()
 
 def ipqs_malicious_url(query: str, **kwargs: Dict[str, Any]) -> Response:
     """IPQualityScore's Malicious URL Scanner API scans links in real-time
-    to detect suspicious URLs. Accurately identify phishing links, malware
-    URLs and viruses, parked domains, and suspicious URLs with real-time risk
-    scores. Industry leading phishing detection and domain reputation provide
-    better signals for more accurate decision making.
+        to detect suspicious URLs. Accurately identify phishing links, malware
+        URLs and viruses, parked domains, and suspicious URLs with real-time risk
+        scores. Industry leading phishing detection and domain reputation provide
+        better signals for more accurate decision making.
 
     Args:
         query (str): The URL to scan

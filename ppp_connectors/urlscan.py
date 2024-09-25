@@ -5,7 +5,7 @@ from .helpers import check_required_env_vars, combine_env_configs
 
 env_config: Dict[str, Any] = combine_env_configs()
 
-def urlscan_results(query: str, **kwargs: Dict[str, Any]) -> Response:
+def urlscan_search(query: str, **kwargs: Dict[str, Any]) -> Response:
     """Find archived scans of URLs on urlscan.io
 
     Args:

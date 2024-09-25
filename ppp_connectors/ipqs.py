@@ -38,6 +38,6 @@ def ipqs_malicious_url(query: str, **kwargs: Dict[str, Any]) -> Response:
         **kwargs
     }
 
-    result: Response = make_request(method=method, url=url, headers=headers, params=params)
+    result: Response = make_request(method=method, url=url, headers=headers, json=params)
 
     return result

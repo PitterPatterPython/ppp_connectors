@@ -1,5 +1,6 @@
 from typing import Dict, Any, List
 from requests import Response
+import sys
 from .broker import make_request
 from .helpers import check_required_env_vars, combine_env_configs
 
@@ -141,7 +142,7 @@ def spycloud_ato_phone_number(phone_number:str, **kwargs: Dict[str, Any]) -> Res
             search for the sha1, sha256, or sha512 hash of the phone number.
 
     Returns:
-        Response: requests.Respone json response from the request
+        Response: requests.Response json response from the request
     """
 
     # Define required environment variables
@@ -165,6 +166,16 @@ def spycloud_ato_phone_number(phone_number:str, **kwargs: Dict[str, Any]) -> Res
     return result
 
 def spycloud_ato_breach_catalog(query:str, **kwargs: Dict[str, Any]) -> Response:
+    """List or Query the Breach Catalog
+
+
+    Args:
+        query (str): Query value to search the breach catalog for.
+
+
+    Returns:
+        Response: requests.Response json response from the request
+    """
 
     # Define required environment variables
     required_vars: List[str] = [
@@ -184,6 +195,57 @@ def spycloud_ato_breach_catalog(query:str, **kwargs: Dict[str, Any]) -> Response
         'query': query,
         **kwargs
     }
+
+    result: Response = make_request(method=method, url=url, headers=headers, params=params)
+
+    return result
+
+def spycloud_inv_search(search_type: str, query:str, **kwargs: Dict[str, Any]) -> Response:
+
+    # Define required environment variables
+    required_vars: List[str] = [
+        'SPYCLOUD_API_INV_KEY'
+    ]
+
+    # Check and ensure that required variables are present, exits if not
+    check_required_env_vars(env_config, required_vars)
+
+    # These are valid endpoints and their corresponding full URLs. We'll use these
+    # to check that the user passed a valid 'search_type' parameter
+    base_url: str = 'https://api.spycloud.io/investigations-v2/breach/data'
+    valid_endpoints: Dict[str, str] = {
+        'domain': f'{base_url}/domains',
+        'email': f'{base_url}/emails',
+        'ip': f'{base_url}/ips',
+        'infected-machine-id': f'{base_url}/infected-machine-ids',
+        'log-id': f'{base_url}/log-ids',
+        'password': f'{base_url}/passwords',
+        'username': f'{base_url}/usernames',
+        'email-username': f'{base_url}/email-usernames',
+        'phone-number': f'{base_url}/phone-numbers',
+        'social-handle': f'{base_url}/social-handles',
+        'bank-number': f'{base_url}/bank-numbers',
+        'cc-number': f'{base_url}/cc-numbers',
+        'drivers-license': f'{base_url}/drivers-licenses',
+        'national-id': f'{base_url}/national-ids',
+        'passport-number': f'{base_url}/passport-numbers',
+        'ssn': f'{base_url}/social-security-numbers',
+    }
+
+    # Completely exit if they supply an invalid search_type
+    if search_type not in valid_endpoints:
+        print(f'[!] Error: "{search_type}" is not a valid search type. Must be one of '
+              f'{", ".join(valid_endpoints.keys())}', file=sys.stderr)
+        sys.exit(1)
+
+    method: str = 'get'
+    url: str = f'{valid_endpoints[search_type]}/{query}'
+
+    headers: Dict = {
+        'accept': 'application/json',
+        'x-api-key': env_config['SPYCLOUD_API_INV_KEY']
+    }
+    params: Dict = dict(kwargs)
 
     result: Response = make_request(method=method, url=url, headers=headers, params=params)
 

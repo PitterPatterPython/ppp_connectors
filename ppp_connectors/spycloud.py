@@ -223,7 +223,7 @@ def spycloud_inv_domains(domain:str, **kwargs: Dict[str, Any]) -> Response:
     url: str = f'https://api.spycloud.io/investigations-v2/breach/data/domains/{domain}'
     headers: Dict = {
         'accept': 'application/json',
-        'x-api-key': env_config['SPYCLOUD_API_ATO_KEY']
+        'x-api-key': env_config['SPYCLOUD_API_INV_KEY']
     }
     params: Dict = dict(kwargs)
 

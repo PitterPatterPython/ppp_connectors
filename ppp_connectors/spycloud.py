@@ -234,7 +234,7 @@ def spycloud_inv_search(search_type: str, query:str, **kwargs: Dict[str, Any]) -
 
     # Completely exit if they supply an invalid search_type
     if search_type not in valid_endpoints:
-        print(f'[!] Error: {search_type} is not a valid search type. Must be one of '
+        print(f'[!] Error: "{search_type}" is not a valid search type. Must be one of '
               f'{", ".join(valid_endpoints.keys())}', file=sys.stderr)
         sys.exit(1)
 
@@ -250,4 +250,3 @@ def spycloud_inv_search(search_type: str, query:str, **kwargs: Dict[str, Any]) -
     result: Response = make_request(method=method, url=url, headers=headers, params=params)
 
     return result
-

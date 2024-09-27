@@ -1,4 +1,4 @@
-
+from datetime import date, datetime
 from dotenv import dotenv_values, find_dotenv
 import os
 import sys
@@ -38,3 +38,18 @@ def combine_env_configs() -> Dict[str, Any]:
     combined_config: Dict[str, Any] = {**env_config, **dict(os.environ)}
 
     return combined_config
+
+def validate_date_string(date_str: str) -> bool:
+    """Validates that a date string is, well, a valid date string
+
+    Args:
+        date_str (str): a string in "YYYY-MM-DD" format
+
+    Returns:
+        bool: True or False as valid or not
+    """
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False

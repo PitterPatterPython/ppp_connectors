@@ -1,6 +1,7 @@
 import sys
 from typing import Callable, Dict, Any, List
 import requests
+from requests.auth import HTTPBasicAuth
 from .helpers import check_required_env_vars, combine_env_configs
 
 
@@ -11,6 +12,7 @@ def make_request(
     method: str,
     url: str,
     headers: Dict[str, str] = None,
+    auth: HTTPBasicAuth = None,
     params: Dict[str, Any] = None,
     data: Dict[str, Any] = None,
     json: Dict[str, Any] = None
@@ -60,4 +62,11 @@ def make_request(
     if not request_func:
         raise ValueError(f'Unsupported HTTP method: {method}')
 
-    return request_func(url, headers=headers, params=params, data=data, json=json, proxies=proxies, verify=verify)
+    return request_func(url,
+                        headers=headers,
+                        auth=auth,
+                        params=params,
+                        data=data,
+                        json=json,
+                        proxies=proxies,
+                        verify=verify)

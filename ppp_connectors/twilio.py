@@ -35,10 +35,9 @@ def twilio_lookup(phone_number: str, data_packages: list=[], **kwargs: Dict[str,
 
     # Valid set of data packages for Twilio. Compare the ones that the user passed in
     # to ensure that they've passed valid ones. Exit immediately if they didn't.
-    valid_data_packages: Set = {'validation', 'caller_name', 'sim_swap',
-                           'call_forwarding', 'line_status', 'line_type_intelligence',
-                           'identity_match', 'reassigned_number', 'sms_pumping_risk',
-                           'phone_number_quality_score', 'pre_fill'}
+    valid_data_packages: Set = {'caller_name', 'sim_swap', 'call_forwarding', 'line_status',
+                                'line_type_intelligence', 'identity_match', 'reassigned_number',
+                                'sms_pumping_risk', 'phone_number_quality_score', 'pre_fill'}
     data_packages_set: Set = set(data_packages)
     invalid_packages =  data_packages_set - valid_data_packages
     if len(invalid_packages) != 0:

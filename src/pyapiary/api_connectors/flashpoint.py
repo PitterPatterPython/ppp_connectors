@@ -45,6 +45,16 @@ class FlashpointConnector(Broker):
         return self.post("/sources/v2/fraud", json={"query": query, **kwargs})
 
     @log_method_call
+    def search_fraud_checks(self, query: str, **kwargs) -> httpx.Response:
+        """Checks search provides the ability to search and read data from our Checks dataset.
+
+        Args:
+            query (str): The search string used in the API query.
+            **kwargs: Additional query logic per the Flashpoint API documentation.
+        """
+        return self.post("/sources/v2/fraud/checks", json={"query": query, **kwargs})
+
+    @log_method_call
     def search_marketplaces(self, query: str, **kwargs) -> httpx.Response:
         """
         Search Flashpoint marketplace datasets.
@@ -139,6 +149,16 @@ class AsyncFlashpointConnector(AsyncBroker):
             **kwargs: Additional query logic per the Flashpoint API documentation.
         """
         return await self.post("/sources/v2/fraud", json={"query": query, **kwargs})
+
+    @log_method_call
+    async def search_fraud_checks(self, query: str, **kwargs) -> httpx.Response:
+        """Checks search provides the ability to search and read data from our Checks dataset.
+
+        Args:
+            query (str): The search string used in the API query.
+            **kwargs: Additional query logic per the Flashpoint API documentation.
+        """
+        return await self.post("/sources/v2/fraud/checks", json={"query": query, **kwargs})
 
     @log_method_call
     async def search_marketplaces(self, query: str, **kwargs) -> httpx.Response:

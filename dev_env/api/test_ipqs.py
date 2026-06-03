@@ -17,7 +17,7 @@ async def main():
     )
 
     res = await ipqs.malicious_url(
-        query="cracked.to"
+        query="bad.url"
     )
 
     print(res)

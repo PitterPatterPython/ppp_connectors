@@ -18,7 +18,7 @@ sample_scan_uuid = "0198d378-c19e-707c-add7-45c289b2851c"
 
 
 # ---------- sync ----------
-res = urlscan.search("bclubs.cc")
+res = urlscan.search("google.com")
 print(res.status_code)
 
 res = urlscan.scan("google.com")

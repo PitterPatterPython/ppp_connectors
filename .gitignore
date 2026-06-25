@@ -166,6 +166,4 @@ cython_debug/
 
 .DS_Store
 .claude/
-CLAUDE.md
-AGENTS.md
 .vscode

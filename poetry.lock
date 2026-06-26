@@ -323,6 +323,18 @@ typing-extensions = {version = ">=4.6.0", markers = "python_version < \"3.13\""}
 test = ["pytest (>=6)"]
 
 [[package]]
+name = "graphql-core"
+version = "3.2.11"
+description = "GraphQL implementation for Python, a port of GraphQL.js, the JavaScript reference implementation for GraphQL."
+optional = false
+python-versions = "<4,>=3.7"
+groups = ["dev"]
+files = [
+    {file = "graphql_core-3.2.11-py3-none-any.whl", hash = "sha256:0b3e35ff41e9adba53021ab0cef475eb18f57c7f53f0f2ca55567fbf3c537ea0"},
+    {file = "graphql_core-3.2.11.tar.gz", hash = "sha256:e7e156d10beb127cab5c89ff0da71416fc73d27c484a4757d3b2d35633774802"},
+]
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -1996,4 +2008,4 @@ odbc = ["pyodbc"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "185064e27542ca4a3c83070595d23ec65f9a44408753e00cbd39a7319669a66c"
+content-hash = "aeb60a0ad8cda077dcba07cf71ccc8a6fccf2dc7166c061b25d7134fe6214232"

@@ -166,8 +166,6 @@ cython_debug/
 
 .DS_Store
 .claude/
-CLAUDE.md
-AGENTS.md
 .vscode
 # OpenCTI raw introspection dump (regenerable by re-running an introspection
 # query; the readable SDL docs/opencti-6.9.6.graphql is the committed reference)

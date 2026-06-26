@@ -79,6 +79,7 @@ class OpenCTIConnector(GraphQLConnector):
         """Build an OpenCTI FilterGroup. See :func:`_build_filter_group`."""
         return _build_filter_group(key, values, operator=operator, mode=mode)
 
+    @log_method_call
     def list_entity_types(self) -> tuple:
         """Return the curated tuple of searchable OpenCTI entity types."""
         return q.SEARCHABLE_TYPES
@@ -185,6 +186,7 @@ class AsyncOpenCTIConnector(AsyncGraphQLConnector):
         """Build an OpenCTI FilterGroup. See :func:`_build_filter_group`."""
         return _build_filter_group(key, values, operator=operator, mode=mode)
 
+    @log_method_call
     def list_entity_types(self) -> tuple:
         """Return the curated tuple of searchable OpenCTI entity types."""
         return q.SEARCHABLE_TYPES

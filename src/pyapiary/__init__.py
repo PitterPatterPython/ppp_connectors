@@ -6,6 +6,8 @@ from pyapiary.api_connectors import (
     flashpoint,
     ipqs,
     generic,
+    graphql,
+    opencti,
 )
 
 # DBMS connectors
@@ -21,9 +23,11 @@ __all__ = [
     "elasticsearch",
     "flashpoint",
     "generic",
+    "graphql",
     "ipqs",
     "mongo",
     "odbc",
+    "opencti",
     "splunk",
     "spycloud",
     "twilio",

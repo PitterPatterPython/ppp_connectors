@@ -19,6 +19,7 @@ New development and releases are published under the `pyapiary` package name.
   - [Customizing API Requests with `**kwargs`](#customizing-api-requests-with-kwargs)
   - [Proxy Awareness](#proxy-awareness)
   - [SSL Verification and Per-Request Options](#ssl-verification-and-per-request-options)
+  - [GraphQL & OpenCTI](#-graphql--opencti)
 - [DBMS Connectors](#-dbms-connectors)
   - [MongoDB](#mongodb)
   - [Elasticsearch](#elasticsearch)
@@ -186,6 +187,51 @@ conn = URLScanConnector(http2=True)
 response = conn.get("https://nghttp2.org/httpbin/get")
 print(response.http_version)
 ```
+
+---
+
+### 🧬 GraphQL & OpenCTI
+
+`GraphQLConnector` is a generic, schema-agnostic GraphQL executor built on the same `Broker` (so it inherits retries, proxies, timeouts, logging). Like the DBMS connectors, it does not care what your query is — it just runs it. It returns the raw `httpx.Response` (house convention) and raises `GraphQLError` when a `200` response carries a top-level `errors` array (GraphQL reports query errors with HTTP 200, so `raise_for_status` never catches them).
+
+```python
+from pyapiary.api_connectors.graphql import GraphQLConnector
+
+gql = GraphQLConnector(base_url="https://api.example.com", endpoint="/graphql")
+resp = gql.execute("query($n: Int) { things(first: $n) { id } }", {"n": 5})
+data = resp.json()["data"]
+# Pass raise_on_errors=False to inspect resp.json()["errors"] yourself.
+```
+
+`OpenCTIConnector` is a thick, curated connector (urlscan-style) layered on `GraphQLConnector`, with query field selections pinned to OpenCTI **6.9.x** (verified against `docs/opencti-6.9.6.graphql`). It reads `OPENCTI_URL` and `OPENCTI_TOKEN` from the environment (or accepts them explicitly). Access is governed entirely by the permissions on the token's user — so scope the token appropriately, including for mutations run via `execute`.
+
+```python
+from pyapiary.api_connectors.opencti import OpenCTIConnector
+
+with OpenCTIConnector() as octi:                       # env: OPENCTI_URL / OPENCTI_TOKEN
+    # filter helper builds the 6.9.x FilterGroup for you
+    flt = octi.filter_group("name", "Cobalt Strike")
+
+    # generic entity search (any type) — `representative.main` is a universal label
+    resp = octi.search_entities(types=["Malware"], filters=flt, first=50)
+    conn = resp.json()["data"]["stixCoreObjects"]
+
+    # dedicated methods for type-specific fields
+    octi.get_indicators(search="1.2.3.4")
+    octi.get_observables(types=["IPv4-Addr"])
+    octi.get_relationships(from_id="<id>", relationship_type="uses")
+
+    # anything outside the catalog: drop to the generic executor
+    octi.execute("query { me { name } }")
+```
+
+> **Existence check** — there is no `exists()` method (no connector returns a synthesized value). Use `search_entities(..., first=1)` and check whether the result's `edges` is empty.
+>
+> **Pagination** — connectors don't auto-paginate (same as `URLScanConnector`). Pass `after` with the previous page's `pageInfo.endCursor` and loop yourself; `pageInfo.globalCount` gives the total.
+>
+> **Async** — `AsyncGraphQLConnector` / `AsyncOpenCTIConnector` mirror the sync API.
+
+The query catalog (`opencti_queries.py`) is validated offline against the committed SDL in CI. To refresh the schema for a new OpenCTI version, run a GraphQL introspection query against the instance (requires the server's `APP__GRAPHQL__PLAYGROUND__FORCE_DISABLED_INTROSPECTION=false`), save the result as `docs/opencti_schema.json`, and convert it to SDL with `graphql-core`'s `build_client_schema` + `print_schema`. Then use `dev_env/opencti/gen_opencti_fields.py <Type>` to author field selections from the SDL.
 
 ---
 

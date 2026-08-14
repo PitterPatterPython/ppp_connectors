@@ -17,8 +17,22 @@ def mock_pyodbc():
 def test_odbcconnector_init(mock_pyodbc):
     mock_logger = MagicMock()
     connector = ODBCConnector("DSN=testdb", logger=mock_logger)
-    mock_pyodbc.connect.assert_called_once_with("DSN=testdb")
+    mock_pyodbc.connect.assert_called_once_with("DSN=testdb", autocommit=False)
     assert connector.logger == mock_logger
+
+
+def test_odbcconnector_init_autocommit_defaults_to_false(mock_pyodbc):
+    """pyodbc defaults to autocommit=False; the connector must not change that."""
+    ODBCConnector("DSN=testdb")
+
+    mock_pyodbc.connect.assert_called_once_with("DSN=testdb", autocommit=False)
+
+
+def test_odbcconnector_init_autocommit_true(mock_pyodbc):
+    """Drivers without transaction support (e.g. BigQuery) require autocommit=True."""
+    ODBCConnector("DSN=testdb", autocommit=True)
+
+    mock_pyodbc.connect.assert_called_once_with("DSN=testdb", autocommit=True)
 
 
 def test_odbcconnector_query_returns_rows(mock_pyodbc):

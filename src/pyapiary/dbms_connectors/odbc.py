@@ -28,16 +28,19 @@ class ODBCConnector:
     Supports use as a context manager for automatic connection cleanup.
     """
 
-    def __init__(self, conn_str: str, logger: Any = None):
+    def __init__(self, conn_str: str, logger: Any = None, autocommit: bool = False):
         """
         Initialize the ODBC connection.
 
         Args:
             conn_str (str): The ODBC connection string.
             logger (Any, optional): Logger instance for logging. Defaults to None.
+            autocommit (bool, optional): Whether to open the connection in autocommit
+                mode. Defaults to False, matching pyodbc. Drivers for databases that
+                do not support transactions (e.g. BigQuery) require True.
         """
         pyodbc = _get_pyodbc()
-        self.conn = pyodbc.connect(conn_str)
+        self.conn = pyodbc.connect(conn_str, autocommit=autocommit)
         self.logger = logger or setup_logger(__name__)
         self._log("ODBC connection established")
 

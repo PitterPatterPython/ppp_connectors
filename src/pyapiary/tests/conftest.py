@@ -4,7 +4,7 @@ from pathlib import Path
 
 AUTH_PARAM_REDACT = [
     # List of substrings that, if present in a key, will cause redaction (case-insensitive)
-    "key", "api_key", "access_token", "auth", "authorization", "user", "pass", "api", "x-api", "x_api"
+    "key", "api_key", "access_token", "auth", "authorization", "user", "pass", "api", "x-api", "x_api", "token"
 ]
 
 

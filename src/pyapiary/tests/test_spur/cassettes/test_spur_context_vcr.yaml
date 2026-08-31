@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: null
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.spur.us
+      token:
+      - REDACTED
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://api.spur.us/v2/context/1.1.1.1
+  response:
+    body:
+      string: '{"ip": "1.1.1.1", "organization": "Cloudflare, Inc.", "as": {"number":
+        13335, "organization": "CLOUDFLARENET"}, "location": {"country": "US", "state":
+        "California", "city": "San Francisco"}, "client": {"behaviors": [], "concentration":
+        {}, "countries": 1, "spread": 0, "proxies": [], "count": 1, "types": ["DATACENTER"]},
+        "risks": [], "services": [], "tunnels": []}'
+    headers:
+      Content-Type:
+      - application/json
+    status:
+      code: 200
+      message: OK

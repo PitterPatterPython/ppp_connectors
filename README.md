@@ -323,6 +323,22 @@ for doc in results:
     print(doc)
 ```
 
+`query` accepts three forms:
+
+```python
+conn.query("my-index", "status:500 AND host:web*")        # Lucene query string
+conn.query("my-index", {"query": {"match_all": {}}})      # full DSL search body
+conn.query("my-index", {"match": {"host": "web1"}})       # bare DSL query clause
+```
+
+Set `size` for the per-batch page size and `scroll` for how long each scroll context
+stays alive between batches; raise `scroll` if processing a batch is slow. A `size`
+specified inside the DSL body takes precedence over the `size` argument.
+
+Authenticate with `username`/`password` or with `api_key`; omit both for an
+unsecured cluster. `verify_certs`, `ca_certs` and `request_timeout` are also
+available, and any other keyword argument is passed through to `Elasticsearch`.
+
 ### ODBC (e.g., Postgres, Teradata)
 
 For automatic connection handling, use `ODBCConnector` as a context manager
